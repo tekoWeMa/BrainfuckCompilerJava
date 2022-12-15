@@ -1,9 +1,11 @@
+package ch.teko.wema;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 
-public class Main {
+public class Solution2 {
     public static void main(String[] args) throws IOException {
         // FileToRead
         Path FileToRead = Path.of("D:\\Studium\\IntellijProjekte\\BrainfuckReadfile\\src\\main\\resources\\FileToRead.txt");
