@@ -79,4 +79,7 @@ public class Main {
 
 }
 
-//TODO: enumlist.add(code); einmalig machen (for each loop?)
+//TODO: Solution implementieren clean up code in main
+// Erklärung für Problem: Loop position falls Loop ausgeführt wird
+// after closing bracket: how to know wich one is the opposing opening bracket?
+// ^ vise versa ( stack solution?)

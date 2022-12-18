@@ -23,33 +23,29 @@ public class Solution2 {
 
             // Check if the character is a known opcode and add the corresponding enum to the list
             switch (c) {
-                case '>':
-                    EnumList.add(OpcodeEnum.GRÖSSERALS);
-                    break;
-                case '<':
-                    EnumList.add(OpcodeEnum.KLEINERALS);
-                    break;
-                case '+':
-                    EnumList.add(OpcodeEnum.PLUS);
-                    break;
-                case '-':
-                    EnumList.add(OpcodeEnum.MINUS);
-                    break;
-                case '.':
-                    EnumList.add(OpcodeEnum.PUNKT);
-                    break;
-                case ',':
-                    EnumList.add(OpcodeEnum.KOMMA);
-                    break;
-                case '[':
-                    EnumList.add(OpcodeEnum.KLAMMERAUF);
-                    break;
-                case ']':
-                    EnumList.add(OpcodeEnum.KLAMMERZU);
-                    break;
+                case '>' -> EnumList.add(OpcodeEnum.GRÖSSERALS);
+                case '<' -> EnumList.add(OpcodeEnum.KLEINERALS);
+                case '+' -> EnumList.add(OpcodeEnum.PLUS);
+                case '-' -> EnumList.add(OpcodeEnum.MINUS);
+                case '.' -> EnumList.add(OpcodeEnum.PUNKT);
+                case ',' -> EnumList.add(OpcodeEnum.KOMMA);
+                case '[' -> EnumList.add(OpcodeEnum.KLAMMERAUF);
+                case ']' -> EnumList.add(OpcodeEnum.KLAMMERZU);
             }
         }
-        System.out.println(EnumList);
+        //System.out.println(EnumList);
+        //  ArrayList<OpcodeEnum> EnumList = new ArrayList<>();
+        Stack<int>
+
+        for (int i = 0; i < EnumList.size(); i++) {
+            OpcodeEnum code = EnumList.get(i);
+            if (code == OpcodeEnum.KLAMMERAUF) {
+
+            }
+
+            System.out.println(i);
+        }
+
     }
 
     public enum OpcodeEnum {
