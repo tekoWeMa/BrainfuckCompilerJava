@@ -5,81 +5,64 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 
-// D:\Studium\IntellijProjekte\BrainfuckReadfile\src\main\resources\FileToRead.txt
+public class Solution2 {
+    public static void main(String[] args) throws IOException {
+        // FileToRead
+        Path FileToRead = Path.of("D:\\Studium\\IntellijProjekte\\BrainfuckReadfile\\src\\main\\resources\\FileToRead.txt");
 
-// Sauce: https://www.geeksforgeeks.org/java-program-to-read-a-file-to-string/
-
-public class Main {
-    public static void main(String[] args)
-        // idk for what this part is, i guess it handles an exception lol
-            throws IOException {
-        Path FileToRead
-                = Path.of("D:\\Studium\\IntellijProjekte\\BrainfuckReadfile\\src\\main\\resources\\FileToRead.txt");
-
-        //File.readString() method is used to read a text file and store it in a string
-        // calling files.readstring filetoreload, wich goes to path and reads the file
-
+        // Read the file to a string
         String str = Files.readString(FileToRead);
 
-        //System.out.println(str);
+        // Create an arraylist to store enums from the string
+        ArrayList<OpcodeEnum> EnumList = new ArrayList<>();
 
-        //create arraylist to store enums from string
-        ArrayList<OpcodeEnum> EnumList = new ArrayList<OpcodeEnum>();
-
-
-        //Iterate over String
-        // using simple for-loop
+        // Iterate over the string
         for (int i = 0; i < str.length(); i++) {
-
-            // System.out.println(str.charAt(i));
-
-            // Wert der Position i wird c zugewiesen.
+            // Get the current character
             char c = str.charAt(i);
 
-            // check if c is chararacter, create enum of that type
-            if (c == '>') {
-                OpcodeEnum code = OpcodeEnum.GRÖSSERALS;
-                EnumList.add(code);
-            } else if (c == '<') {
-                OpcodeEnum code = OpcodeEnum.KLEINERALS;
-                EnumList.add(code);
-            } else if (c == '+') {
-                OpcodeEnum code = OpcodeEnum.PLUS;
-                EnumList.add(code);
-            } else if (c == '-') {
-                OpcodeEnum code = OpcodeEnum.MINUS;
-                EnumList.add(code);
-            } else if (c == '.') {
-                OpcodeEnum code = OpcodeEnum.PUNKT;
-                EnumList.add(code);
-            } else if (c == ',') {
-                OpcodeEnum code = OpcodeEnum.KOMMA;
-                EnumList.add(code);
-            } else if (c == '[') {
-                OpcodeEnum code = OpcodeEnum.KLAMMERAUF;
-                EnumList.add(code);
-            } else if (c == ']') {
-                OpcodeEnum code = OpcodeEnum.KLAMMERZU;
-                EnumList.add(code);
+            // Check if the character is a known opcode and add the corresponding enum to the list
+            switch (c) {
+                case '>' -> EnumList.add(OpcodeEnum.GRÖSSERALS);
+                case '<' -> EnumList.add(OpcodeEnum.KLEINERALS);
+                case '+' -> EnumList.add(OpcodeEnum.PLUS);
+                case '-' -> EnumList.add(OpcodeEnum.MINUS);
+                case '.' -> EnumList.add(OpcodeEnum.PUNKT);
+                case ',' -> EnumList.add(OpcodeEnum.KOMMA);
+                case '[' -> EnumList.add(OpcodeEnum.KLAMMERAUF);
+                case ']' -> EnumList.add(OpcodeEnum.KLAMMERZU);
+            }
+        }
+        //System.out.println(EnumList);
+        //  ArrayList<OpcodeEnum> EnumList = new ArrayList<>();
+        Stack<int>
+
+        for (int i = 0; i < EnumList.size(); i++) {
+            OpcodeEnum code = EnumList.get(i);
+            if (code == OpcodeEnum.KLAMMERAUF) {
+
             }
 
-
+            System.out.println(i);
         }
-        System.out.println(EnumList);
-
 
     }
 
     public enum OpcodeEnum {
-
-        GRÖSSERALS, KLEINERALS, PLUS, MINUS, PUNKT, KOMMA, KLAMMERAUF, KLAMMERZU
-
-        //>, <, +, -, ., ",", [, ]
+        GRÖSSERALS,
+        KLEINERALS,
+        PLUS,
+        MINUS,
+        PUNKT,
+        KOMMA,
+        KLAMMERAUF,
+        KLAMMERZU
     }
-
 }
 
-//TODO: Solution implementieren clean up code in main
-// Erklärung für Problem: Loop position falls Loop ausgeführt wird
+
+// Erklärung für Problem: Loop position falls Loop ausgeführt wird HERE:
+// Declare 3 variables. one for "is it looping", one to save the Value of the Position of the loop (stack) and one for the amount of loops.
+
 // after closing bracket: how to know wich one is the opposing opening bracket?
 // ^ vise versa ( stack solution?)
