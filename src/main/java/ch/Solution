@@ -1,0 +1,86 @@
+import java.io.*;
+
+public class Brainfuck {
+    public static void main(String[] args) throws IOException {
+        if (args.length != 1) {
+            System.out.println("Usage: java BrainFuck <filename>");
+            return;
+        }
+
+        // Read the BrainFuck program from the file
+        String program = readFile(args[0]);
+
+        // Initialize the memory and the pointer
+        byte[] memory = new byte[30000];
+        int pointer = 0;
+
+        // Initialize the input and output streams
+        InputStream in = System.in;
+        OutputStream out = System.out;
+
+        // Iterate through the program characters
+        for (int i = 0; i < program.length(); i++) {
+            char c = program.charAt(i);
+            switch (c) {
+                case '>':
+                    pointer++;
+                    break;
+                case '<':
+                    pointer--;
+                    break;
+                case '+':
+                    memory[pointer]++;
+                    break;
+                case '-':
+                    memory[pointer]--;
+                    break;
+                case '.':
+                    out.write(memory[pointer]);
+                    break;
+                case ',':
+                    memory[pointer] = (byte)in.read();
+                    break;
+                case '[':
+                    if (memory[pointer] == 0) {
+                        i = findMatchingBracket(program, i);
+                    }
+                    break;
+                case ']':
+                    if (memory[pointer] != 0) {
+                        i = findMatchingBracket(program, i);
+                    }
+                    break;
+                default:
+                    // Ignore all other characters
+                    break;
+            }
+        }
+    }
+
+    private static int findMatchingBracket(String program, int i) {
+        int brackets = 1;
+        for (int j = i + 1; j < program.length(); j++) {
+            char c = program.charAt(j);
+            if (c == '[') {
+                brackets++;
+            } else if (c == ']') {
+                brackets--;
+            }
+            if (brackets == 0) {
+                return j;
+            }
+        }
+        return -1;
+    }
+
+    private static String readFile(String filename) throws IOException {
+        BufferedReader reader = new BufferedReader(new FileReader(filename));
+        StringBuilder sb = new StringBuilder();
+        String line;
+        while ((line = reader.readLine()) != null) {
+            sb.append(line);
+        }
+        reader.close();
+        return sb.toString();
+    }
+}
