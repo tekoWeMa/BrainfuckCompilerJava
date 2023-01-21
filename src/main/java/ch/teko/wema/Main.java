@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.Stack;
 
 public class Main {
     public static void main(String[] args) throws IOException {
@@ -15,6 +16,9 @@ public class Main {
 
         // Create an arraylist to store enums from the string
         ArrayList<OpcodeEnum> EnumList = new ArrayList<>();
+
+        // Create a stack for brackets
+        Stack<Integer> bracketStack = new Stack<>();
 
         // Iterate over the string
         for (int i = 0; i < str.length(); i++) {
@@ -29,13 +33,23 @@ public class Main {
                 case '-' -> EnumList.add(OpcodeEnum.MINUS);
                 case '.' -> EnumList.add(OpcodeEnum.PUNKT);
                 case ',' -> EnumList.add(OpcodeEnum.KOMMA);
-                case '[' -> EnumList.add(OpcodeEnum.KLAMMERAUF);
-                case ']' -> EnumList.add(OpcodeEnum.KLAMMERZU);
+                case '[' -> {
+                    EnumList.add(OpcodeEnum.KLAMMERAUF);
+                    bracketStack.push(i);
+                }
+                case ']' -> {
+                    EnumList.add(OpcodeEnum.KLAMMERZU);
+                    if (bracketStack.isEmpty()) {
+                        System.out.println("Keis closing bracket ade Position: " + i);
+                    } else {
+                        // removes top element from
+                        bracketStack.pop();
+                    }
+                }
             }
         }
         //System.out.println(EnumList);
-        //  ArrayList<OpcodeEnum> EnumList = new ArrayList<>();
-        Stack<int>
+         // ArrayList<OpcodeEnum> EnumList = new ArrayList<>();
 
         for (int i = 0; i < EnumList.size(); i++) {
             OpcodeEnum code = EnumList.get(i);
@@ -77,3 +91,7 @@ public class Main {
 // bei klasse sind getters und setters benötigt
 // array mit loops (sortieren)
 //
+
+// Notes: why create a seperate class? not really making sense as of now
+
+// what use getters and setters for? no understand
