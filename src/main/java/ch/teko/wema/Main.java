@@ -5,7 +5,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 
-public class Solution2 {
+public class Main {
     public static void main(String[] args) throws IOException {
         // FileToRead
         Path FileToRead = Path.of("D:\\Studium\\IntellijProjekte\\BrainfuckReadfile\\src\\main\\resources\\FileToRead.txt");
@@ -46,6 +46,7 @@ public class Solution2 {
             System.out.println(i);
         }
 
+
     }
 
     public enum OpcodeEnum {
@@ -61,8 +62,18 @@ public class Solution2 {
 }
 
 
-// Erklärung für Problem: Loop position falls Loop ausgeführt wird HERE:
-// Declare 3 variables. one for "is it looping", one to save the Value of the Position of the loop (stack) and one for the amount of loops.
 
-// after closing bracket: how to know wich one is the opposing opening bracket?
-// ^ vise versa ( stack solution?)
+// stack machen:
+
+//    Copy code
+//    Stack stack = new Stack(5);
+//stack.push(1);
+//        stack.push(2);
+//        stack.push(3);
+//
+//
+//
+// loop: klasse erstellen mit 2 "members": Begin und end
+// bei klasse sind getters und setters benötigt
+// array mit loops (sortieren)
+//
