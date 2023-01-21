@@ -85,13 +85,13 @@ public class Main {
 //        stack.push(2);
 //        stack.push(3);
 //
-//
-//
 // loop: klasse erstellen mit 2 "members": Begin und end
+
 // bei klasse sind getters und setters benötigt
 // array mit loops (sortieren)
-//
 
 // Notes: why create a seperate class? not really making sense as of now
 
 // what use getters and setters for? no understand
+
+// TODO: klasse erstellen; wie kann ich die Werte des Begin und end ändern
