@@ -20,6 +20,10 @@ public class Main {
         // Create a stack for brackets
         Stack<Integer> bracketStack = new Stack<>();
 
+        // create a arraylist to add both the opening and closing brackets
+        ArrayList<BracketPair> bracketList = new ArrayList<>();
+
+
         // Iterate over the string
         for (int i = 0; i < str.length(); i++) {
             // Get the current character
@@ -36,31 +40,59 @@ public class Main {
                 case '[' -> {
                     EnumList.add(OpcodeEnum.KLAMMERAUF);
                     bracketStack.push(i);
+                    bracketList.add(new BracketPair(i, -1));
                 }
                 case ']' -> {
                     EnumList.add(OpcodeEnum.KLAMMERZU);
                     if (bracketStack.isEmpty()) {
                         System.out.println("Keis closing bracket ade Position: " + i);
                     } else {
-                        // removes top element from
-                        bracketStack.pop();
+                        int beginIndex = bracketStack.pop();
+                        for (BracketPair bp : bracketList) {
+                            if (bp.getBegin() == beginIndex) {
+                                bp.setEnd(i);
+                                break;
+                            }
+                        }
                     }
                 }
             }
         }
-        //System.out.println(EnumList);
-         // ArrayList<OpcodeEnum> EnumList = new ArrayList<>();
+       // Print enum list value
+        System.out.println(EnumList);
 
+        //print size
         for (int i = 0; i < EnumList.size(); i++) {
             OpcodeEnum code = EnumList.get(i);
-            if (code == OpcodeEnum.KLAMMERAUF) {
 
-            }
+            //print index of the enumlist ( not used)
+            //System.out.println(i);
+        }
+        //prints the indexes of the bracketlists
+        for (BracketPair bp : bracketList) {
+            System.out.println("Begin index: " + bp.getBegin() + " End index: " + bp.getEnd());
+        }
+    }
 
-            System.out.println(i);
+    public static class BracketPair {
+        private int begin;
+        private int end;
+
+        public BracketPair(int begin, int end) {
+            this.begin = begin;
+            this.end = end;
         }
 
+        public int getBegin() {
+            return begin;
+        }
 
+        public int getEnd() {
+            return end;
+        }
+        public void setEnd(int end) {
+            this.end = end;
+        }
     }
 
     public enum OpcodeEnum {
@@ -89,9 +121,5 @@ public class Main {
 
 // bei klasse sind getters und setters benötigt
 // array mit loops (sortieren)
-
-// Notes: why create a seperate class? not really making sense as of now
-
-// what use getters and setters for? no understand
 
 // TODO: klasse erstellen; wie kann ich die Werte des Begin und end ändern
