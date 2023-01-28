@@ -84,3 +84,47 @@ public class Brainfuck {
         return sb.toString();
     }
 }
+
+
+// code possibly needed:
+
+        for (int i = 0; i < EnumList.size(); i++) {
+            OpcodeEnum code = EnumList.get(i);
+            switch (code) {
+                case GRÖSSERALS:
+                    pointer++;
+                    break;
+                case KLEINERALS:
+                    pointer--;
+                    break;
+                case PLUS:
+                    memory[pointer]++;
+                    break;
+                case MINUS:
+                    memory[pointer]--;
+                    break;
+                case PUNKT:
+                    System.out.println((char)memory[pointer]);
+                    break;
+                case KOMMA:
+                    memory[pointer] = (byte)System.in.read();
+                    break;
+                 case KLAMMERAUF:
+                     if (memory[pointer] == 0) {
+                         i = bracketList.get(i).getEnd() - 1;
+                     }
+                         break;
+
+                 case KLAMMERZU:
+                     if (memory[pointer] != 0) {
+                         i = bracketList.get(i).getBegin() - 1;
+                     }
+                     break;
+
+
+
+            }
+
+            //print index of the enumlist ( not used)
+            //System.out.println(i);
+        }

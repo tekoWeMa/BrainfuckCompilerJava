@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Stack;
 
 public class Main {
@@ -23,6 +24,14 @@ public class Main {
         // create a arraylist to add both the opening and closing brackets
         ArrayList<BracketPair> bracketList = new ArrayList<>();
 
+        // Create a new byte array called "memory" with a size of 30000
+        byte[] memory = new byte[30000];
+
+        // Initialize all elements to 0
+        Arrays.fill(memory, (byte) 0);
+
+        // Create an int variable called "pointer"
+        int pointer = 0;
 
         // Iterate over the string
         for (int i = 0; i < str.length(); i++) {
@@ -31,16 +40,38 @@ public class Main {
 
             // Check if the character is a known opcode and add the corresponding enum to the list
             switch (c) {
-                case '>' -> EnumList.add(OpcodeEnum.GRÖSSERALS);
-                case '<' -> EnumList.add(OpcodeEnum.KLEINERALS);
-                case '+' -> EnumList.add(OpcodeEnum.PLUS);
-                case '-' -> EnumList.add(OpcodeEnum.MINUS);
-                case '.' -> EnumList.add(OpcodeEnum.PUNKT);
-                case ',' -> EnumList.add(OpcodeEnum.KOMMA);
+                case '>' -> {
+                    EnumList.add(OpcodeEnum.GRÖSSERALS);
+                    pointer++;
+                }
+
+                case '<' -> {
+                    EnumList.add(OpcodeEnum.KLEINERALS);
+                    pointer--;
+                }
+                case '+'  -> {
+                    EnumList.add(OpcodeEnum.PLUS);
+                    memory[pointer]++;
+                }
+                case '-' -> {
+                    EnumList.add(OpcodeEnum.MINUS);
+                    memory[pointer]--;
+                }
+                case '.' -> {
+                    EnumList.add(OpcodeEnum.PUNKT);
+                    System.out.println((char)memory[pointer]);
+                }
+                case ',' -> {
+                    EnumList.add(OpcodeEnum.KOMMA);
+                    memory[pointer] = (byte)System.in.read();
+                }
                 case '[' -> {
                     EnumList.add(OpcodeEnum.KLAMMERAUF);
                     bracketStack.push(i);
                     bracketList.add(new BracketPair(i, -1));
+                    if (memory[pointer] == 0) {
+                        i = bracketList.get(i).getEnd() - 1;
+                    }
                 }
                 case ']' -> {
                     EnumList.add(OpcodeEnum.KLAMMERZU);
@@ -52,6 +83,9 @@ public class Main {
                         for (BracketPair bp : bracketList) {
                             if (bp.getBegin() == beginIndex) {
                                 bp.setEnd(i);
+                                if (memory[pointer] != 0) {
+                                    i = bracketList.get(i).getBegin() - 1;
+                                }
                                 break;
                             }
                         }
@@ -69,16 +103,12 @@ public class Main {
        // System.out.println(EnumList);
 
         //print size
-        for (int i = 0; i < EnumList.size(); i++) {
-            OpcodeEnum code = EnumList.get(i);
 
-            //print index of the enumlist ( not used)
-            //System.out.println(i);
-        }
         //prints the indexes of the bracketlists
         for (BracketPair bp : bracketList) {
             System.out.println("Begin index: " + bp.getBegin() + " End index: " + bp.getEnd());
         }
+        //System.out.print(memory);
     }
 
     public static class BracketPair {
@@ -99,6 +129,7 @@ public class Main {
             this.end = end;
         }
     }
+
 
     public enum OpcodeEnum {
         GRÖSSERALS,
@@ -127,5 +158,8 @@ public class Main {
 // bei klasse sind getters und setters benötigt
 // array mit loops (sortieren)
 
-// TODO: alle Opcodes interpretieren ausser grösser und kleinerals, klammer auf und zu
-// TODO: danach klammern indexieren
+// TODO: alle Opcodes interpretieren ausser grösser und kleinerals, klammer auf und zu YEP
+// TODO: danach klammern indexieren :  idk what the fuck is going on
+
+//TODO: Frage : wir müssen nicht noch einen neuen loop machen um über die opcode enum liste zu laufen, right? wir können alles in bereits vorhanden abwickeln
+// stackoverflow possible solution: https://stackoverflow.com/questions/72046454/how-do-i-implement-the-looping-functionality-in-my-brainfuck-interpreter
