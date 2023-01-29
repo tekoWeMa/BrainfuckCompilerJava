@@ -27,9 +27,6 @@ public class Main {
         // Create a new byte array called "memory" with a size of 30000
         byte[] memory = new byte[30000];
 
-        // Initialize all elements to 0
-        Arrays.fill(memory, (byte) 0);
-
         // Create an int variable called "pointer"
         int pointer = 0;
 
@@ -42,36 +39,26 @@ public class Main {
             switch (c) {
                 case '>' -> {
                     EnumList.add(OpcodeEnum.GRÖSSERALS);
-                    pointer++;
                 }
-
                 case '<' -> {
                     EnumList.add(OpcodeEnum.KLEINERALS);
-                    pointer--;
                 }
                 case '+'  -> {
                     EnumList.add(OpcodeEnum.PLUS);
-                    memory[pointer]++;
                 }
                 case '-' -> {
                     EnumList.add(OpcodeEnum.MINUS);
-                    memory[pointer]--;
                 }
                 case '.' -> {
                     EnumList.add(OpcodeEnum.PUNKT);
-                    System.out.println((char)memory[pointer]);
                 }
                 case ',' -> {
                     EnumList.add(OpcodeEnum.KOMMA);
-                    memory[pointer] = (byte)System.in.read();
                 }
                 case '[' -> {
                     EnumList.add(OpcodeEnum.KLAMMERAUF);
                     bracketStack.push(i);
                     bracketList.add(new BracketPair(i, -1));
-                    if (memory[pointer] == 0) {
-                        i = bracketList.get(i).getEnd() - 1;
-                    }
                 }
                 case ']' -> {
                     EnumList.add(OpcodeEnum.KLAMMERZU);
@@ -83,9 +70,6 @@ public class Main {
                         for (BracketPair bp : bracketList) {
                             if (bp.getBegin() == beginIndex) {
                                 bp.setEnd(i);
-                                if (memory[pointer] != 0) {
-                                    i = bracketList.get(i).getBegin() - 1;
-                                }
                                 break;
                             }
                         }
@@ -97,19 +81,69 @@ public class Main {
         for (var stack:bracketStack){
             System.out.println("Es Opening Bracket z vill ade position: " + stack);
         }
+        for (int i = 0; i < EnumList.size(); i++) {
+            OpcodeEnum code = EnumList.get(i);
+            //System.out.println(i);
+            switch (code) {
+                case GRÖSSERALS:
+                    pointer++;
+                    break;
+                case KLEINERALS:
+                    pointer--;
+                    break;
+                case PLUS:
+                    memory[pointer]++;
+                    break;
+                case MINUS:
+                    memory[pointer]--;
+                    break;
+                case PUNKT:
+                    System.out.print((char)memory[pointer]);
+                    break;
+                case KOMMA:
+                    memory[pointer] = (byte)System.in.read();
+                    break;
+                case KLAMMERAUF:
+                    if (memory[pointer] == 0) {
+                        //
+                        for (int p = 0; p < bracketList.size(); p++) {
+                            if (bracketList.get(p).getBegin() == i) {
+                                i = bracketList.get(p).getEnd() - 1;
+                                break;
+                            }
+                            //bracketList code = bracketList.get(p);
+                        }
+                        //i = bracketList.get(i).getEnd() - 1;
+                    } else {
+                       // i --;
+                    }
+                    break;
 
+                case KLAMMERZU:
+                    if (memory[pointer] != 0) {
+                        for (int p = 0; p < bracketList.size(); p++) {
+                            if (bracketList.get(p).getEnd() == i) {
+                                i = bracketList.get(p).getBegin() - 1;
+                                break;
+                            }
+                        }
+                    } else {
+                     //   i--;
+                    }
+                    break;
+            }
 
-       // Print enum list value
-       // System.out.println(EnumList);
-
-        //print size
-
-        //prints the indexes of the bracketlists
-        for (BracketPair bp : bracketList) {
-            System.out.println("Begin index: " + bp.getBegin() + " End index: " + bp.getEnd());
+            //print index of the enumlist ( not used)
+            //System.out.println(i);
         }
-        //System.out.print(memory);
+        System.out.println();
+
+          //prints the indexes of the bracketlists
+          //  for (BracketPair bp : bracketList) {
+          // System.out.println("Begin index: " + bp.getBegin() + " End index: " + bp.getEnd());
+          //}
     }
+
 
     public static class BracketPair {
         private int begin;
@@ -143,23 +177,6 @@ public class Main {
     }
 }
 
+// TODO: look into performant code to index the opening and closing brackets
 
-
-// stack machen:
-
-//    Copy code
-//    Stack stack = new Stack(5);
-//stack.push(1);
-//        stack.push(2);
-//        stack.push(3);
-//
-// loop: klasse erstellen mit 2 "members": Begin und end
-
-// bei klasse sind getters und setters benötigt
-// array mit loops (sortieren)
-
-// TODO: alle Opcodes interpretieren ausser grösser und kleinerals, klammer auf und zu YEP
-// TODO: danach klammern indexieren :  idk what the fuck is going on
-
-//TODO: Frage : wir müssen nicht noch einen neuen loop machen um über die opcode enum liste zu laufen, right? wir können alles in bereits vorhanden abwickeln
 // stackoverflow possible solution: https://stackoverflow.com/questions/72046454/how-do-i-implement-the-looping-functionality-in-my-brainfuck-interpreter
