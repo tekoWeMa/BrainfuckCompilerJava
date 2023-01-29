@@ -10,7 +10,7 @@ import java.util.Stack;
 public class Main {
     public static void main(String[] args) throws IOException {
         // FileToRead
-        Path FileToRead = Path.of("D:\\Studium\\IntellijProjekte\\BrainfuckReadfile\\src\\main\\resources\\FileToRead.txt");
+        Path FileToRead = Path.of("D:\\Studium\\IntellijProjekte\\BrainfuckReadfile\\src\\main\\resources\\mandelbrot.bf");
 
         // Read the file to a string
         String str = Files.readString(FileToRead);
@@ -57,8 +57,8 @@ public class Main {
                 }
                 case '[' -> {
                     EnumList.add(OpcodeEnum.KLAMMERAUF);
-                    bracketStack.push(i);
-                    bracketList.add(new BracketPair(i, -1));
+                    bracketStack.push(EnumList.size() - 1);
+                    bracketList.add(new BracketPair(EnumList.size() - 1, -1));
                 }
                 case ']' -> {
                     EnumList.add(OpcodeEnum.KLAMMERZU);
@@ -69,7 +69,7 @@ public class Main {
                         int beginIndex = bracketStack.pop();
                         for (BracketPair bp : bracketList) {
                             if (bp.getBegin() == beginIndex) {
-                                bp.setEnd(i);
+                                bp.setEnd(EnumList.size() - 1);
                                 break;
                             }
                         }
