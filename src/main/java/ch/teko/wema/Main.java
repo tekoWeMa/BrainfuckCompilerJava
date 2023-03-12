@@ -10,7 +10,8 @@ import java.util.Stack;
 public class Main {
     public static void main(String[] args) throws IOException {
         // FileToRead
-        Path FileToRead = Path.of("D:\\Studium\\IntellijProjekte\\BrainfuckReadfile\\src\\main\\resources\\mandelbrot.bf");
+	var path = args[0];
+        Path FileToRead = Path.of(path);
 
         // Read the file to a string
         String str = Files.readString(FileToRead);
